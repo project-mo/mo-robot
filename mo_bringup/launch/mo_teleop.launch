@@ -1,0 +1,9 @@
+<launch>
+  <!-- Nodes for joy teleop -->
+  <node pkg="teleop_twist_joy" type="teleop_node" name="joy_teleop_node"/>
+  <node pkg="joy" type="joy_node" name="gamepad_driver"/>
+
+  <!-- Base driver -->
+  <include file="$(find mo_bringup)/launch/mo_base.launch" />
+
+</launch>

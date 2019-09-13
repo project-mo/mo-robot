@@ -1,0 +1,64 @@
+#!/usr/bin/python
+
+import rospy
+import serial
+import struct
+
+from geometry_msgs.msg import Twist
+
+class MoDiffDriveController(object):
+    def __init__(self, baudrate, serial_device, wheel_radius, wheel_separation, gear_ratio):
+        self._baudrate = baudrate
+        self._serial_device = serial_device
+        self._wheel_radius = wheel_radius
+        self._wheel_separation = wheel_separation
+        self._gear_ratio = gear_ratio
+
+        self.serial_connection = serial.Serial(baudrate=self._baudrate)
+        self.serial_connection.port = self._serial_device
+        self.serial_connection.open()
+
+    def on_new_twist(self, data):
+        print "Reading data..."
+        while self.serial_connection.in_waiting:
+            serial_data = self.serial_connection.readline()
+            print serial_data
+        else:
+            print "No data received"
+
+        print "Sending new twist..."
+        cmd_left, cmd_right = self.twist_to_motor_speeds(data.linear.x, data.angular.z)
+        serial_msg = struct.pack("<ff", cmd_left, cmd_right)
+        self.serial_connection.write(serial_msg)
+        print "cmd_left = {}, cmd_right = {}".format(cmd_left, cmd_right)
+
+    def twist_to_motor_speeds(self, linear_velocity_x, angular_velocity_z):
+        # Compute wheels velocities:
+        vel_left  = (linear_velocity_x - angular_velocity_z * self._wheel_separation / 2.0)/self._wheel_radius * self._gear_ratio
+        vel_right = (linear_velocity_x + angular_velocity_z * self._wheel_separation / 2.0)/self._wheel_radius * self._gear_ratio
+        return vel_left, vel_right
+
+    
+
+def main():
+    rospy.init_node("mo_base_driver")
+    
+    # Serial communication parameters
+    baudrate = rospy.get_param('~baudrate', 9600)
+    device = rospy.get_param('~serial_device')
+    
+    # Vehicle parameters
+    wheel_radius = rospy.get_param('~wheel_radius')
+    wheel_separation = rospy.get_param('~wheel_separation')
+    gear_ratio = rospy.get_param('~gear_ratio', 1)
+
+    mo_diff_drive_controller = MoDiffDriveController(baudrate, device, wheel_radius, wheel_separation, gear_ratio)
+
+    cmd_subscriber = rospy.Subscriber("cmd_vel", Twist, 
+                                      mo_diff_drive_controller.on_new_twist, queue_size=10)
+
+    rospy.spin()
+
+
+if __name__ == '__main__':
+    main()
