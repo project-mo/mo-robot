@@ -1,3 +1,6 @@
 [submodule "vendor/image_recognition"]
 	path = vendor/image_recognition
 	url = https://github.com/tue-robotics/image_recognition.git
+[submodule "vendor/jetson-inference"]
+	path = vendor/jetson-inference
+	url = https://github.com/dusty-nv/jetson-inference.git
