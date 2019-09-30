@@ -1,0 +1,3 @@
+[submodule "vendor/image_recognition"]
+	path = vendor/image_recognition
+	url = https://github.com/tue-robotics/image_recognition.git
