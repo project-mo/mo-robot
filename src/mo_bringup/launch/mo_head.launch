@@ -1,0 +1,29 @@
+<launch>
+
+<!-- Dynamixels -->
+<include file="$(find mo_bringup)/launch/dynamixel_bringup.launch" >
+  <arg name="dynamixel_controller_args" value="--manager=dxl_manager --port=dynamixel_port neck_pitch neck_roll neck_yaw"/>
+</include>
+
+<!-- robot realsense rgbd camera -->
+<include file="$(find mo_bringup)/launch/realsense_bringup.launch"/>
+
+
+<!--publishes dynamixel/joint_states
+subscribes setpoints dynamixels
+
+Republish nodes
+publish control_msgs/joint_states
+subscribe dynamixel_joint states
+
+Nodes:
+realsense driver
+publishes:
+image/rgb
+image/depth
+
+head_ref server 
+actionlib interface:
+head_goal-->
+
+</launch>

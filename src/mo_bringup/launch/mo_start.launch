@@ -1,0 +1,12 @@
+<launch>
+
+  <!-- robot drivetrain -->
+  <include file="$(find mo_bringup)/launch/mo_base.launch"/>
+
+  <!-- robot head and neck -->
+  <include file="$(find mo_bringup)/launch/mo_head.launch"/>
+
+  <!-- robot person tracking-->
+  <include file="$(find mo_bringup)/launch/mo_person_tracking.launch"/>
+
+</launch>

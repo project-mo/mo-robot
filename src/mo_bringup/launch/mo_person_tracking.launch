@@ -1,0 +1,26 @@
+<launch>
+
+<!-- robot body detection -->
+<include file="$(find mo_bringup)/launch/body_detection.launch"/>
+
+
+<!--Nodes:
+includes:
+body_detection.launch
+publishes:
+detections x,y cameraframe
+
+subscribes: 
+image/rgb
+
+3d person extractor
+publishes: detections xyz in frame
+subscribes:
+-detections met xy in cameraframe
+-image_depth
+
+people tracking head ref client
+Publishes head ref goals
+subscribes detections met xyz in frame-->
+
+</launch>

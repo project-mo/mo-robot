@@ -1,0 +1,48 @@
+dynamixel_manager:
+    namespace: dxl_manager
+    serial_ports:
+        dynamixel_port:
+            port_name: "/dev/ttyUSB0"
+            baud_rate: 1000000
+            min_motor_id: 1
+            max_motor_id: 3
+            update_rate: 20
+
+neck_yaw:
+    controller:
+        package: dynamixel_controllers
+        module: joint_position_controller
+        type: JointPositionController
+    joint_name: neck_yaw_joint
+    joint_speed: 10
+    motor:
+        id: 1
+        init: 467
+        min: 166
+        max: 767
+
+neck_roll:
+    controller:
+        package: dynamixel_controllers
+        module: joint_position_controller
+        type: JointPositionController
+    joint_name: neck_roll_joint
+    joint_speed: 0.5
+    motor:
+        id: 2
+        init: 520
+        min: 402
+        max: 650
+
+neck_pitch:
+    controller:
+        package: dynamixel_controllers
+        module: joint_position_controller
+        type: JointPositionController
+    joint_name: neck_pitch_joint
+    joint_speed: 10
+    motor:
+        id: 3
+        init: 616
+        min: 616
+        max: 678
