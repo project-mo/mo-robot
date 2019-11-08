@@ -17,9 +17,9 @@ neck_yaw:
     joint_speed: 10
     motor:
         id: 1
-        init: 467
-        min: 166
-        max: 767
+        init: 1024
+        min: 0
+        max: 2048
 
 neck_roll:
     controller:
