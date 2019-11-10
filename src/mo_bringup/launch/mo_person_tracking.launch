@@ -1,7 +1,15 @@
+<?xml version="1.0"?>
+
 <launch>
 
 <!-- robot body detection -->
 <include file="$(find mo_bringup)/launch/body_detection.launch"/>
+
+<node pkg="mo_people_tracking" type="mo_head_people_tracker" name="mo_head_people_tracker">
+    <remap from="camera_info" to="/image/color/camera_info"/>
+    <!-- <remap from="detections" to="" -->
+    <remap from="head_yaw_reference" to="/neck_yaw/command"/>
+</node>
 
 
 <!--Nodes:
@@ -10,7 +18,7 @@ body_detection.launch
 publishes:
 detections x,y cameraframe
 
-subscribes: 
+subscribes:
 image/rgb
 
 3d person extractor
